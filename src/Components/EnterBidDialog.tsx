@@ -15,15 +15,20 @@ type EnterBidDialogState = {
 const styles = {
     textField: {
         marginRight: ".75em",
-    //marginLeft: ".75em",
-    marginTop:".5em",
-    marginBottom:".5em"
+        //marginLeft: ".75em",
+        marginTop:".5em",
+        marginBottom:".5em"
     },
     title: {
         align:"center"
     }
 }
 const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
+    type Item = {
+        name:string;
+        description:string;
+        price:number;
+    }
     const [emailText, setEmailText] = useState<string>("")
     const [phoneNumberText, setPhoneNumberText] = useState<string>("")
     const [bidAmount, setBidAmount] = useState<string>("")
@@ -49,7 +54,7 @@ const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
            !bidAmount ||
            !name.split("")) return console.log("Invalid field(s)") //check later
         clearInputs()
-        //useffect ajax
+       //AJAX calls
     }
     const validateBidAmount = ():boolean => { //validate all 4 fields
         return true
@@ -72,7 +77,7 @@ const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
                 <TextField value={phoneNumberText} label={"Phone Number"} onChange={handlePhoneNumberChange} margin={"normal"} sx={styles.textField}/>
                 <TextField value={bidAmount} label={"Bid Amount"} onChange={handleBidAmountChange} sx={styles.textField}/>
                 <DialogActions>
-                    <Button onClick={handleSubmitBid}>Submit Bid</Button>
+                    <Button onClick={handleSubmitBid}>Submit Bid</Button> {/*Expose all descriptions button in app.tsx*/}
                     <Button onClick={close}>Close</Button>
                 </DialogActions>
             </DialogContent>

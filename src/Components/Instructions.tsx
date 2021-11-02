@@ -1,16 +1,14 @@
 import { Typography } from "@mui/material"
 import { Box } from "@mui/system"
-import React from "react"
+import React, { ReactNode } from "react"
 
+type InstructionsProps = {
+    children: ReactNode[]
+}
 const styles = {
     border: '1px dashed grey',
     minHeight:"16em"
 }
-const Instructions = ():JSX.Element => {
-    return (
-        <Box sx={styles}>
-            <Typography>Insert instructions here</Typography>
-        </Box>
-    )
-}
+const Instructions = (props:InstructionsProps):JSX.Element => <Box sx={styles}>{props.children}</Box>
+    
 export default Instructions
