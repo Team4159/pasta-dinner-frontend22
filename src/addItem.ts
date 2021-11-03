@@ -12,6 +12,7 @@ const addItem = async (name:string, price:number,desc:string):Promise<void> => {
    const res = await fetch("https://pastadinner.lren.cf/additem", {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
+        mode:'cors',
         body: JSON.stringify(item)
    })
    .then(res => console.log(res.json()))

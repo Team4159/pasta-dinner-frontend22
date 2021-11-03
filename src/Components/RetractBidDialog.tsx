@@ -3,8 +3,11 @@ import { ChangeEvent, useState } from "react"
 
 type RetractBidProps = {
     isOpen:boolean;
-    id:number;
-    handleDialogClose: () => void
+    handleDialogClose: (cardID:number | undefined) => void
+    currentCard?:number
+}
+type RetractBidInfo = {
+
 }
 const styles = {
     textField: {
@@ -30,14 +33,24 @@ const RetractBid = (props:RetractBidProps):JSX.Element => {
     }
     const close = ():void => {
         clearInputs()
-        props.handleDialogClose()
+        props.handleDialogClose(props.currentCard)
     }
-    const handleSubmitRetract = ():void => {
+    const handleSubmitRetract = async ():Promise<void> => {
         if(!bidAmount ||
            bidAmount.split(" ").length > 1 ||
            !name.split("")) return console.log("Invalid field(s)") //Set error TextField instead later
         clearInputs()
         //useffect ajax
+        try {
+            const body:RetractBidInfo = {
+
+            }
+            const res = await fetch("", {method:'POST', mode:'cors', body: JSON.stringify(body)})
+            const data = await res.json()
+            console.log(data)
+        } catch(err){
+            console.log(err)
+        }
     }
     return (
         <Dialog open={props.isOpen}>

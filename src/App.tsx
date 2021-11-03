@@ -15,6 +15,7 @@ type AppState = {
   dialogIsOpen:boolean;
   retractDialogIsOpen:boolean;
   itemCards?: ReactNode[]
+  currentSelectedCard?:number
 }
 const styles = {
   
@@ -25,16 +26,30 @@ class App extends Component<Readonly<AppProps>, Readonly<AppState>> {
     this.state = {
       dialogIsOpen: false,
       retractDialogIsOpen: false,
-      itemCards: undefined
+      itemCards: undefined,
+      currentSelectedCard: undefined
     }
   }
-  handleDialogOpen = ():void => this.setState({dialogIsOpen:true})
-  handleDialogClose = ():void => this.setState({dialogIsOpen:false})
-  handleRetractDialogOpen = ():void => this.setState({retractDialogIsOpen:true})
-  handleRetractDialogClose = ():void => this.setState({retractDialogIsOpen: false})
+  handleDialogOpen = (cardID?:number):void => {
+    this.setState({dialogIsOpen:true})
+    this.setCurrentSelectedCard(cardID)
+  }
+  handleDialogClose = (cardID?:number):void => {
+    this.setState({dialogIsOpen:false})
+    this.setCurrentSelectedCard(cardID)
+  }
+  handleRetractDialogOpen = (cardID?:number):void => {
+    this.setState({retractDialogIsOpen:true})
+    this.setCurrentSelectedCard(cardID)
+  }
+  handleRetractDialogClose = (cardID?:number):void => {
+    this.setState({retractDialogIsOpen: false})
+    this.setCurrentSelectedCard(cardID)
+  }
+  setCurrentSelectedCard = (cardID?:number):void => this.setState({currentSelectedCard:cardID}, () => {})
 
   componentDidMount():void{
-
+    
   }
   render():JSX.Element{
     return (
@@ -45,10 +60,12 @@ class App extends Component<Readonly<AppProps>, Readonly<AppState>> {
            <InstructionCard id={2} description={" "}/>
            <InstructionCard id={3} description={" "}/>
         </Instructions>
-        <ItemCard handleDialogOpen={this.handleDialogOpen} handleRetractDialogOpen={this.handleRetractDialogOpen}/>
-        <ItemsContainer/>
-        <EnterBidDialog isOpen={this.state.dialogIsOpen} handleDialogClose={this.handleDialogClose} />
-        <RetractBidDialog isOpen={this.state.retractDialogIsOpen} id={0} handleDialogClose={this.handleRetractDialogClose}/>
+        <ItemsContainer 
+          handleDialogOpen={this.handleDialogOpen} 
+          handleRetractDialogOpen={this.handleRetractDialogOpen}
+        />
+        <EnterBidDialog isOpen={this.state.dialogIsOpen} handleDialogClose={this.handleDialogClose} currentCard={this.state.currentSelectedCard}/>
+        <RetractBidDialog isOpen={this.state.retractDialogIsOpen} currentCard={this.state.currentSelectedCard} handleDialogClose={this.handleRetractDialogClose}/>
       </Box>
     );
   }

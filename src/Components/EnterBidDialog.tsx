@@ -4,7 +4,8 @@ import { ChangeEvent,useEffect, useState } from "react"
 
 type EnterBidDialogProps = {
     isOpen:boolean;
-    handleDialogClose: () => void
+    handleDialogClose: (cardID?:number) => void;
+    currentCard?:number;
 }
 type EnterBidDialogState = {
     emailText?:string;
@@ -24,14 +25,16 @@ const styles = {
     }
 }
 const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
-    type Item = {
-        name:string;
-        description:string;
-        price:number;
+    type BidInfo = {
+        id:number
+        price:number
+        name:string
+        phone:string
+        email:string
     }
     const [emailText, setEmailText] = useState<string>("")
     const [phoneNumberText, setPhoneNumberText] = useState<string>("")
-    const [bidAmount, setBidAmount] = useState<string>("")
+    const [bidAmount, setBidAmount] = useState<string | number>("")
     const [name, setName] = useState<string>("")
     const handleEmailChange = (e:ChangeEvent<HTMLInputElement>):void => setEmailText(e.currentTarget.value)
     const handlePhoneNumberChange = (e:ChangeEvent<HTMLInputElement>):void => setPhoneNumberText(e.currentTarget.value)
@@ -46,18 +49,44 @@ const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
     }
     const close = ():void => {
         clearInputs()
-        props.handleDialogClose()
+        props.handleDialogClose(props.currentCard)
     }
-    const handleSubmitBid = ():void => {
+    const handleSubmitBid = async ():Promise<void | Response> => {
         if(!emailText.split(" ") || 
            !phoneNumberText.split(" ") || 
            !bidAmount ||
            !name.split("")) return console.log("Invalid field(s)") //check later
         clearInputs()
+        
        //AJAX calls
+       const bidInfo:BidInfo = {
+            id: props.currentCard as number,
+            price: bidAmount as number,
+            name: name,
+            phone: phoneNumberText,
+            email: emailText
+       }
+       try{
+            const res = await fetch(
+                "https://pastadinner.lren.cf/users/addbid", 
+                {
+                    method:'POST',
+                    mode:'cors',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(bidInfo)
+                }
+            )
+            const data = await res.json()
+            console.log(data)
+       } catch(err){
+           console.log(err)
+       }
     }
     const validateBidAmount = ():boolean => { //validate all 4 fields
         return true
+    }
+    const handleErrors = (type:string):void => {
+
     }
     useEffect(() => {
         //initial ajax
@@ -72,8 +101,8 @@ const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
                 <DialogContentText align="left"> {/*give margin bottom*/}
                     Enter Contact Info
                 </DialogContentText>
-                <TextField value={name} label={"Name"} onChange={handleNameChange} sx={styles.textField}/>
-                <TextField value={emailText} label={"Email"} onChange={handleEmailChange} sx={styles.textField}/> {/*do validation later*/}
+                <TextField error={false} helperText={""}value={name} label={"Name"} onChange={handleNameChange} sx={styles.textField}/>
+                <TextField value={emailText} label={"Email"} onChange={handleEmailChange} sx={styles.textField}/> {/*do validation later;name+email marginBottom*/}
                 <TextField value={phoneNumberText} label={"Phone Number"} onChange={handlePhoneNumberChange} margin={"normal"} sx={styles.textField}/>
                 <TextField value={bidAmount} label={"Bid Amount"} onChange={handleBidAmountChange} sx={styles.textField}/>
                 <DialogActions>
