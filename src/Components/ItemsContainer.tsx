@@ -16,7 +16,8 @@ const styles = {
         flexDirection: "row",
         justifyContent: "start",
         overflow:"hidden",
-        marginRight:"auto"
+        marginRight:"auto",
+        flexWrap:"wrap"
     } as CSSProperties
 }
 
@@ -52,6 +53,26 @@ const ItemsContainer = (props: ItemsContainerProps):JSX.Element => {
                     description={item.description}
                 />
             )}
+            <ItemCard  
+            handleDialogOpen={props.handleDialogOpen} 
+            handleRetractDialogOpen={props.handleRetractDialogOpen} 
+            />
+             <ItemCard  
+            handleDialogOpen={props.handleDialogOpen} 
+            handleRetractDialogOpen={props.handleRetractDialogOpen} 
+            />
+             <ItemCard  
+            handleDialogOpen={props.handleDialogOpen} 
+            handleRetractDialogOpen={props.handleRetractDialogOpen} 
+            />
+             <ItemCard  
+            handleDialogOpen={props.handleDialogOpen} 
+            handleRetractDialogOpen={props.handleRetractDialogOpen} 
+            />
+             <ItemCard  
+            handleDialogOpen={props.handleDialogOpen} 
+            handleRetractDialogOpen={props.handleRetractDialogOpen} 
+            />
         </div>
     )
 }
