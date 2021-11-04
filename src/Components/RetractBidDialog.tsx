@@ -7,7 +7,9 @@ type RetractBidProps = {
     currentCard?:number
 }
 type RetractBidInfo = {
-
+    //id:number
+    //price:string
+    //name:string
 }
 const styles = {
     textField: {

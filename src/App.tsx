@@ -9,6 +9,7 @@ import InstructionCard from './Components/InstructionCard';
 import RetractBidDialog from './Components/RetractBidDialog';
 import addItem from './addItem'
 import ItemsContainer from './Components/ItemsContainer';
+import instructions from "./Descriptions/Descriptions.json"
 
 type AppProps = {}
 type AppState = {
@@ -49,7 +50,7 @@ class App extends Component<Readonly<AppProps>, Readonly<AppState>> {
   setCurrentSelectedCard = (cardID?:number):void => this.setState({currentSelectedCard:cardID}, () => {})
 
   componentDidMount():void{
-    
+    console.log(instructions.Step1)
   }
   render():JSX.Element{
     return (

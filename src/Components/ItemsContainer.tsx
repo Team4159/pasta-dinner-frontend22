@@ -2,7 +2,7 @@ import { CSSProperties } from "react"
 import { FunctionComponent, ReactNode, useEffect, useState } from "react"
 import ItemCard from "./ItemCard"
 
-type ItemsContainerProps = {
+type ItemsContainerProps = { //fix expansion issues
     items?: {}[] 
     cards?: ReactNode[]
 
@@ -14,7 +14,7 @@ const styles = {
     row:{
         display:"flex",
         flexDirection: "row",
-        justifyContent: "start",
+        justifyContent: "center",
         overflow:"hidden",
         marginRight:"auto",
         flexWrap:"wrap"
@@ -52,6 +52,7 @@ const ItemsContainer = (props: ItemsContainerProps):JSX.Element => {
                     startingPrice={item.startingPrice} 
                     description={item.description}
                 />
+            
             )}
             <ItemCard  
             handleDialogOpen={props.handleDialogOpen} 
