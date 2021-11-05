@@ -64,7 +64,7 @@ const RetractBid = (props:RetractBidProps):JSX.Element => {
                 }
             )
             console.log(res.text())
-            if(res.status === 200) clearInputs()
+            if(res.status === 200) clearInputs() //AND change top bid
             else console.log("Not 200")
         } catch(err){
             console.error(err)

@@ -3,8 +3,8 @@ import { CSSProperties } from "react"
 
 type InstructionCardProps = {
     id:number;
-    description:string;
 }
+//The descriptions have to be the same number of lines or else the big number becomes misaligned, fix later or not
 const styles = {
     paper: {
         display:"flex",
@@ -25,7 +25,8 @@ const styles = {
     } as CSSProperties,
     container:{
         maxWidth:"16em",
-        margin:"1em"
+        minWidth:"16em",
+        margin:"1em",
     } as CSSProperties,
     number:{
         fontWeight:"bold",
@@ -50,13 +51,13 @@ const InstructionCard = (props:InstructionCardProps):JSX.Element => { //maybe re
     const showDescriptionById = (id:number):string => {
         switch(id){
             case 1: {
-                return ""
+                return "Browse for an item you like. Then click on bid to enter your bid, name, and contact info. Bids must be $2 higher than the previous and in whole dollars only"
             }
             case 2: {
-                return ""
+                return "If you enter the wrong amount, you can retract your bid and enter a new one by clicking on retract bid and entering your name and the amount you bid by accident."
             }
             case 3: {
-                return ""
+                return "All bids must be entered by November 13 at 2:00PM, or XXh XXmin XXs from now. After the picnic, you will be contacted to receive and pay for your item."
             }
             default: {
                 return "Info on how to submit bids and how much time is left+2 dollar rule+retract bid. Stop cringing, I can see you"
@@ -70,7 +71,7 @@ const InstructionCard = (props:InstructionCardProps):JSX.Element => { //maybe re
                 <Typography sx={styles.number}>{props.id}</Typography>
             </Paper>
             <Typography sx={styles.desc}>
-                {showDescriptionById(0)}
+                {showDescriptionById(props.id)} 
             </Typography>
             </CardContent>
         </Card>

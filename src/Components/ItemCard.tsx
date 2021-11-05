@@ -29,7 +29,7 @@ class ItemCard extends Component< Readonly<ItemCardProps>, Readonly<ItemCardStat
         this.setState({isExpanded: !this.state.isExpanded})
         return this.state.isExpanded
     }
-    getFormattedPrice = (price:number):string => `${price}`.includes(".") ? `${price}`:`${price}.00` //Sam said get rid of cents.
+    getFormattedPrice = (price:number):string => `${price}`.includes(".") ? `${price}`:`${price}.00` //Sam said get rid of cents?
     
     componentDidMount():void {
 

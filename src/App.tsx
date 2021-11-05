@@ -9,7 +9,7 @@ import InstructionCard from './Components/InstructionCard';
 import RetractBidDialog from './Components/RetractBidDialog';
 import addItem from './addItem'
 import ItemsContainer from './Components/ItemsContainer';
-import instructions from "./Descriptions/Descriptions.json"
+
 
 type AppProps = {}
 type AppState = {
@@ -50,16 +50,16 @@ class App extends Component<Readonly<AppProps>, Readonly<AppState>> {
   setCurrentSelectedCard = (cardID?:number):void => this.setState({currentSelectedCard:cardID}, () => {})
 
   componentDidMount():void{
-    console.log(instructions.Step1)
+    
   }
   render():JSX.Element{
     return (
       <Box sx={styles}>
         <Header/>
         <Instructions>
-           <InstructionCard id={1} description={" "}/>
-           <InstructionCard id={2} description={" "}/>
-           <InstructionCard id={3} description={" "}/>
+           <InstructionCard id={1}/>
+           <InstructionCard id={2}/>
+           <InstructionCard id={3}/>
         </Instructions>
         <ItemsContainer 
           handleDialogOpen={this.handleDialogOpen} 
