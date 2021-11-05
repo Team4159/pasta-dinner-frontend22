@@ -53,33 +53,43 @@ const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
     }
     const handleSubmitBid = async ():Promise<void | Response> => {
         if(!emailText.split(" ") || 
+           !emailText ||
            !phoneNumberText.split(" ") || 
            !bidAmount ||
-           !name.split("")) return console.log("Invalid field(s)") //check later
-        clearInputs()
+           !name.split("") || 
+           !parseFloat(bidAmount.toString())
+          ) return console.log("Invalid field(s)") //check later
+
+        const emailRegex:RegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        const phoneRegex:RegExp = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
+        if(!phoneRegex.test(phoneNumberText) || !emailRegex.test(emailText)) return console.log("Invalid format")
+
+        //Need to validate >$2
         
        //AJAX calls
        const bidInfo:BidInfo = {
-            id: props.currentCard as number,
-            price: bidAmount as number,
-            name: name,
-            phone: phoneNumberText,
-            email: emailText
+            "id": props.currentCard as number,
+            "price": bidAmount as number,
+            "name": name,
+            "phone": phoneNumberText,
+            "email": emailText
        }
        try{
+            console.log(bidInfo)
             const res = await fetch(
                 "https://pastadinner.lren.cf/users/addbid", 
                 {
                     method:'POST',
+                    headers: {'Content-Type': 'application/json','Accept': 'application/json'},
                     mode:'cors',
-                    headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify(bidInfo)
                 }
             )
-            const data = await res.json()
-            console.log(data)
+            console.log(res.text())
+            if(res.status === 200) clearInputs()
+            else console.log("not 200")
        } catch(err){
-           console.log(err)
+           console.error(err)
        }
     }
     const validateBidAmount = ():boolean => { //validate all 4 fields

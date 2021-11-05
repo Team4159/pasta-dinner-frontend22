@@ -29,7 +29,7 @@ class ItemCard extends Component< Readonly<ItemCardProps>, Readonly<ItemCardStat
         this.setState({isExpanded: !this.state.isExpanded})
         return this.state.isExpanded
     }
-    getFormattedPrice = (price:number):string => `${price}`.includes(".") ? `${price}`:`${price}.00`
+    getFormattedPrice = (price:number):string => `${price}`.includes(".") ? `${price}`:`${price}.00` //Sam said get rid of cents.
     
     componentDidMount():void {
 
@@ -44,7 +44,7 @@ class ItemCard extends Component< Readonly<ItemCardProps>, Readonly<ItemCardStat
                         <Box component={"span"} sx={styles.name}>{itemName ? `#${id} ${itemName}`:"Item Title"}</Box>
                     </Typography>
                     <Typography align={"center"}>{startingPrice ? `Starting Price - $${this.getFormattedPrice(startingPrice)}`:"Starting Price - N/A"}</Typography>
-                    <Typography align="center">{topBid ? `$${this.getFormattedPrice(topBid)}`:"Top Bid - N/A"}</Typography>
+                    <Typography align="center">{topBid ? `Top Bid - $${this.getFormattedPrice(topBid)}`:"Top Bid - N/A"}</Typography>
                     <CardActions>
                         <Button onClick={() => handleDialogOpen(id)}>Enter Bid</Button>
                         <Button onClick={() => handleRetractDialogOpen(id)}>Retract Bid</Button>

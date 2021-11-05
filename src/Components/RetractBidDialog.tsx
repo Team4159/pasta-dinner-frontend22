@@ -40,18 +40,34 @@ const RetractBid = (props:RetractBidProps):JSX.Element => {
     const handleSubmitRetract = async ():Promise<void> => {
         if(!bidAmount ||
            bidAmount.split(" ").length > 1 ||
-           !name.split("")) return console.log("Invalid field(s)") //Set error TextField instead later
-        clearInputs()
-        //useffect ajax
+           !name.split("")
+        ) return console.log("Invalid field(s)") //Set error TextField instead later
+        
+        if(!(Number.isInteger(parseInt(bidAmount)))) console.log("Please enter a valid bid. Whole dollars only.")
+        
+        //useEffect AJAX
         try {
             const body:RetractBidInfo = {
-
+                "id": props.currentCard,
+                "name": name,
+                "price": bidAmount
             }
-            const res = await fetch("", {method:'POST', mode:'cors', body: JSON.stringify(body)})
-            const data = await res.json()
-            console.log(data)
+            const res = await fetch(
+                "https://pastadinner.lren.cf/users/removebid", 
+                {
+                    method:'POST',  
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }, 
+                    mode:'cors', 
+                    body: JSON.stringify(body)
+                }
+            )
+            console.log(res.text())
+            if(res.status === 200) clearInputs()
+            else console.log("Not 200")
         } catch(err){
-            console.log(err)
+            console.error(err)
         }
     }
     return (

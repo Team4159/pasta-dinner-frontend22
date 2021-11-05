@@ -37,9 +37,31 @@ const styles = {
         marginTop:"2em"
     } as CSSProperties
 }
-const InstructionCard = (props:InstructionCardProps):JSX.Element => {
+const InstructionCard = (props:InstructionCardProps):JSX.Element => { //maybe return jsx instead
+    const getRemainingTime = ():string => {
+        let currentTime:Date = new Date()
+        let deadline:Date = new Date() //Nov 13 at 2:00PM
+        let timeLeft:string | null = null
+        setInterval(():void => {
+
+        }, 1000)
+        return ``
+    }
     const showDescriptionById = (id:number):string => {
-        return ""
+        switch(id){
+            case 1: {
+                return ""
+            }
+            case 2: {
+                return ""
+            }
+            case 3: {
+                return ""
+            }
+            default: {
+                return "Info on how to submit bids and how much time is left+2 dollar rule+retract bid. Stop cringing, I can see you"
+            }
+        }
     }
     return (
         <Card sx={styles.container}>
@@ -48,7 +70,7 @@ const InstructionCard = (props:InstructionCardProps):JSX.Element => {
                 <Typography sx={styles.number}>{props.id}</Typography>
             </Paper>
             <Typography sx={styles.desc}>
-                Info on how to submit bids and how much time is left+2 dollar rule+retract bid. Stop cringing, I can see you
+                {showDescriptionById(0)}
             </Typography>
             </CardContent>
         </Card>
