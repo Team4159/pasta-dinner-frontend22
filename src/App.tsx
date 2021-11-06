@@ -9,7 +9,8 @@ import InstructionCard from './Components/InstructionCard';
 import RetractBidDialog from './Components/RetractBidDialog';
 import addItem from './addItem'
 import ItemsContainer from './Components/ItemsContainer';
-
+import dotenv from 'dotenv'
+dotenv.config()
 
 type AppProps = {}
 type AppState = {

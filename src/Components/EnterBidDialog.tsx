@@ -6,7 +6,7 @@ type EnterBidDialogProps = {
     isOpen:boolean;
     handleDialogClose: (cardID?:number) => void;
     currentCard?:number;
-    setUpdateSignaller: ()=> void
+    setUpdateSignaller: ( )=> void
 }
 type EnterBidDialogState = {
     emailText?:string;

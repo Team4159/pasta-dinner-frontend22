@@ -27,7 +27,7 @@ const ItemsContainer = (props: ItemsContainerProps):JSX.Element => {
     useEffect(() => {
         const getItems = async () => {
             try{
-                var res = await fetch("https://pastadinner.lren.cf/users/getprices", {
+                const res = await fetch("https://pastadinner.lren.cf/users/getprices", {
                     method: 'GET', 
                     mode:'cors',
                     headers:{
@@ -36,13 +36,10 @@ const ItemsContainer = (props: ItemsContainerProps):JSX.Element => {
                 })
                 const data = await res.json()
                 console.log(data)
-                setItems(data)
-                console.log("Ran again")
+                setItems(data) //Make sure its last, its asynchronous
             } catch(err) {
                 console.log("Could not get items " + err)
-            } finally {
-                console.log("Attempted to get items")
-            }
+            } 
         }
         getItems()
     }, [props.updateSignal])
