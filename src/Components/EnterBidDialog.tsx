@@ -6,6 +6,7 @@ type EnterBidDialogProps = {
     isOpen:boolean;
     handleDialogClose: (cardID?:number) => void;
     currentCard?:number;
+    setUpdateSignaller: ()=> void
 }
 type EnterBidDialogState = {
     emailText?:string;
@@ -86,8 +87,11 @@ const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
                 }
             )
             console.log(res.text())
-            if(res.status === 200) clearInputs() //AND change top bid
-            else console.log("not 200")
+            if(res.status === 200) {
+                props.setUpdateSignaller()
+                clearInputs()
+            } //AND change top bid. Have itemscontainer watch for some value submit/retract bid changes
+            else console.log("not 200") //error system
        } catch(err){
            console.error(err)
        }

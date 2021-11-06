@@ -31,9 +31,6 @@ class ItemCard extends Component< Readonly<ItemCardProps>, Readonly<ItemCardStat
     }
     getFormattedPrice = (price:number):string => `${price}`.includes(".") ? `${price}`:`${price}.00` //Sam said get rid of cents?
     
-    componentDidMount():void {
-
-    }
     render():JSX.Element {
         const {description, handleDialogOpen, handleRetractDialogOpen, topBid, itemName, startingPrice, id} = this.props
         return(

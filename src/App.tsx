@@ -17,6 +17,7 @@ type AppState = {
   retractDialogIsOpen:boolean;
   itemCards?: ReactNode[]
   currentSelectedCard?:number
+  updateSignaller:boolean
 }
 const styles = {
   
@@ -28,9 +29,11 @@ class App extends Component<Readonly<AppProps>, Readonly<AppState>> {
       dialogIsOpen: false,
       retractDialogIsOpen: false,
       itemCards: undefined,
-      currentSelectedCard: undefined
+      currentSelectedCard: undefined,
+      updateSignaller: false
     }
   }
+  setUpdateSignaller = ():void => this.setState({updateSignaller:!this.state.updateSignaller})
   handleDialogOpen = (cardID?:number):void => {
     this.setState({dialogIsOpen:true})
     this.setCurrentSelectedCard(cardID)
@@ -62,10 +65,11 @@ class App extends Component<Readonly<AppProps>, Readonly<AppState>> {
            <InstructionCard id={3}/>
         </Instructions>
         <ItemsContainer 
+          updateSignal={this.state.updateSignaller}
           handleDialogOpen={this.handleDialogOpen} 
           handleRetractDialogOpen={this.handleRetractDialogOpen}
         />
-        <EnterBidDialog isOpen={this.state.dialogIsOpen} handleDialogClose={this.handleDialogClose} currentCard={this.state.currentSelectedCard}/>
+        <EnterBidDialog isOpen={this.state.dialogIsOpen} handleDialogClose={this.handleDialogClose} currentCard={this.state.currentSelectedCard} setUpdateSignaller={this.setUpdateSignaller}/>
         <RetractBidDialog isOpen={this.state.retractDialogIsOpen} currentCard={this.state.currentSelectedCard} handleDialogClose={this.handleRetractDialogClose}/>
       </Box>
     );

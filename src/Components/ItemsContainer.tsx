@@ -9,6 +9,7 @@ type ItemsContainerProps = { //fix expansion issues
     //From itemcard
     handleDialogOpen: (cardID?:number) => void;
     handleRetractDialogOpen: (cardID?:number) => void;
+    updateSignal:boolean
 }
 const styles = {
     row:{
@@ -26,10 +27,17 @@ const ItemsContainer = (props: ItemsContainerProps):JSX.Element => {
     useEffect(() => {
         const getItems = async () => {
             try{
-                var res = await fetch("https://pastadinner.lren.cf/users/getprices", {method: 'GET', mode:'cors'})
+                var res = await fetch("https://pastadinner.lren.cf/users/getprices", {
+                    method: 'GET', 
+                    mode:'cors',
+                    headers:{
+                        "Access-Control-Allow-Origin": "*"
+                    }
+                })
                 const data = await res.json()
                 console.log(data)
                 setItems(data)
+                console.log("Ran again")
             } catch(err) {
                 console.log("Could not get items " + err)
             } finally {
@@ -37,13 +45,14 @@ const ItemsContainer = (props: ItemsContainerProps):JSX.Element => {
             }
         }
         getItems()
-    }, [])
+    }, [props.updateSignal])
     return (
         <div style={styles.row}>
 
             {items.map(item =>
                 //console.log(`${item.id} \n ${item.name} \n ${item.startingPrice} \n ${item.description} ${item.highestBid} \n\n`)
                 <ItemCard 
+                    key={item.id}
                     id={item.id}
                     handleDialogOpen={props.handleDialogOpen} 
                     handleRetractDialogOpen={props.handleRetractDialogOpen} 
