@@ -9,8 +9,6 @@ import InstructionCard from './Components/InstructionCard';
 import RetractBidDialog from './Components/RetractBidDialog';
 import addItem from './addItem'
 import ItemsContainer from './Components/ItemsContainer';
-import dotenv from 'dotenv'
-dotenv.config()
 
 type AppProps = {}
 type AppState = {
@@ -71,7 +69,7 @@ class App extends Component<Readonly<AppProps>, Readonly<AppState>> {
           handleRetractDialogOpen={this.handleRetractDialogOpen}
         />
         <EnterBidDialog isOpen={this.state.dialogIsOpen} handleDialogClose={this.handleDialogClose} currentCard={this.state.currentSelectedCard} setUpdateSignaller={this.setUpdateSignaller}/>
-        <RetractBidDialog isOpen={this.state.retractDialogIsOpen} currentCard={this.state.currentSelectedCard} handleDialogClose={this.handleRetractDialogClose}/>
+        <RetractBidDialog isOpen={this.state.retractDialogIsOpen} currentCard={this.state.currentSelectedCard} handleDialogClose={this.handleRetractDialogClose} setUpdateSignaller={this.setUpdateSignaller}/>
       </Box>
     );
   }

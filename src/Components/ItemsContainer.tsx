@@ -23,11 +23,19 @@ const styles = {
 }
 
 const ItemsContainer = (props: ItemsContainerProps):JSX.Element => {
+
     const [items, setItems] = useState<any[]>([])
+
+    //Socket for updating the top bid for all users.
+    const [socket, setSocket] = useState<WebSocket | undefined>()
+    useEffect(() => {
+
+    },[socket])
+
     useEffect(() => {
         const getItems = async () => {
             try{
-                const res = await fetch("https://pastadinner.lren.cf/users/getprices", {
+                const res = await fetch(`${process.env.REACT_APP_API_URL}/users/getprices`, {
                     method: 'GET', 
                     mode:'cors',
                     headers:{
@@ -36,7 +44,7 @@ const ItemsContainer = (props: ItemsContainerProps):JSX.Element => {
                 })
                 const data = await res.json()
                 console.log(data)
-                setItems(data) //Make sure its last, its asynchronous
+                setItems(data) 
             } catch(err) {
                 console.log("Could not get items " + err)
             } 

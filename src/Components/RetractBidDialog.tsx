@@ -5,6 +5,7 @@ type RetractBidProps = {
     isOpen:boolean;
     handleDialogClose: (cardID:number | undefined) => void
     currentCard?:number
+    setUpdateSignaller: () => void
 }
 type RetractBidInfo = {
     //id:number
@@ -26,6 +27,13 @@ const styles = {
 const RetractBid = (props:RetractBidProps):JSX.Element => {
     const [bidAmount, setBidAmount] = useState<string>("")
     const [name, setName] = useState<string>("")
+
+    const [nameError, setNameError] = useState<boolean>(false)
+    const [nameHelperText, setNameHelperText] = useState<string>("")
+    const [bidHelperText, setBidHelperText] = useState<string>("")
+    const [bidError, setBidError] = useState<boolean>(false)
+
+
     const handleNameChange = (e:ChangeEvent<HTMLInputElement>):void => setName(e.currentTarget.value)
     const handleBidAmountChange = (e:ChangeEvent<HTMLInputElement>):void => setBidAmount(e.currentTarget.value)
     const clearInputs = ():void => {
@@ -53,7 +61,7 @@ const RetractBid = (props:RetractBidProps):JSX.Element => {
                 "price": bidAmount
             }
             const res = await fetch(
-                "https://pastadinner.lren.cf/users/removebid", 
+                `${process.env.REACT_APP_API_URL}/users/removebid`, 
                 {
                     method:'POST',  
                     headers: {
@@ -64,7 +72,10 @@ const RetractBid = (props:RetractBidProps):JSX.Element => {
                 }
             )
             console.log(res.text())
-            if(res.status === 200) clearInputs() //AND change top bid
+            if(res.status === 200){
+                props.setUpdateSignaller()
+                clearInputs()
+            }
             else console.log("Not 200")
         } catch(err){
             console.error(err)
