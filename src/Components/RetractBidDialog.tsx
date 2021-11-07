@@ -28,11 +28,26 @@ const RetractBid = (props:RetractBidProps):JSX.Element => {
     const [bidAmount, setBidAmount] = useState<string>("")
     const [name, setName] = useState<string>("")
 
-    const [nameError, setNameError] = useState<boolean>(false)
-    const [nameHelperText, setNameHelperText] = useState<string>("")
-    const [bidHelperText, setBidHelperText] = useState<string>("")
+    const [nameError, setNameError] = useState<boolean>(false) //finish later
     const [bidError, setBidError] = useState<boolean>(false)
 
+    const [confirmationText, setConfirmationText] = useState("")
+
+    const handleErrors = ():boolean => {
+        if(!bidAmount || !(Number.isInteger(parseInt(bidAmount.toString())))){
+            setBidError(true)
+            return false
+        } 
+        if(!name || name.split(" ").length < 2){
+            setNameError(true)
+            return false
+        }
+        return true
+    }
+    const clearErrors = ():void => {
+        setBidError(false)
+        setNameError(false)
+    }
 
     const handleNameChange = (e:ChangeEvent<HTMLInputElement>):void => setName(e.currentTarget.value)
     const handleBidAmountChange = (e:ChangeEvent<HTMLInputElement>):void => setBidAmount(e.currentTarget.value)
@@ -43,16 +58,11 @@ const RetractBid = (props:RetractBidProps):JSX.Element => {
     }
     const close = ():void => {
         clearInputs()
+        clearErrors()
         props.handleDialogClose(props.currentCard)
     }
     const handleSubmitRetract = async ():Promise<void> => {
-        if(!bidAmount ||
-           bidAmount.split(" ").length > 1 ||
-           !name.split("")
-        ) return console.log("Invalid field(s)") //Set error TextField instead later
-        
-        if(!(Number.isInteger(parseInt(bidAmount)))) console.log("Please enter a valid bid. Whole dollars only.")
-        
+        if(!handleErrors()) return
         //useEffect AJAX
         try {
             const body:RetractBidInfo = {
@@ -74,9 +84,16 @@ const RetractBid = (props:RetractBidProps):JSX.Element => {
             console.log(res.text())
             if(res.status === 200){
                 props.setUpdateSignaller()
+                clearErrors()
                 clearInputs()
+                setConfirmationText("Your bid has been retracted.")
+                setTimeout(() => setConfirmationText(""),5000)
+            } 
+            else if(res.status === 404){
+                console.log("Bid not found.")
+                setConfirmationText("Bid not found.")
+                setTimeout(() => setConfirmationText(""),5000)
             }
-            else console.log("Not 200")
         } catch(err){
             console.error(err)
         }
@@ -90,8 +107,21 @@ const RetractBid = (props:RetractBidProps):JSX.Element => {
                 <DialogContentText align="left"> {/*give margin bottom*/}
                     Enter Contact Info
                 </DialogContentText>
-                <TextField value={name} label={"Name"} onChange={handleNameChange} sx={styles.textField}/>
-                <TextField value={bidAmount} label={"Bid Amount"} onChange={handleBidAmountChange} sx={styles.textField}/>
+                <TextField 
+                    error={nameError}
+                    helperText={nameError ? "First Last format is required.":"John Doe"}
+                    value={name} 
+                    label={"Name"} 
+                    onChange={handleNameChange} 
+                    sx={styles.textField}/>
+                <TextField 
+                    error={bidError}
+                    helperText={bidError? "A whole number bid is required.":"20"}
+                    value={bidAmount} 
+                    label={"Bid Amount"} 
+                    onChange={handleBidAmountChange} 
+                    sx={styles.textField}/>
+                <Typography>{confirmationText}</Typography>
                 <DialogActions>
                     <Button onClick={handleSubmitRetract}>Submit Bid</Button> {/*Expose all descriptions button in app.tsx*/}
                     <Button onClick={close}>Close</Button>

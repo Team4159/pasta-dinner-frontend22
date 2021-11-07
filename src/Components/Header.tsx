@@ -14,12 +14,12 @@ const styles = {
         padding:".5em",
         minHeight:"2em",
         whiteSpace:"normal"
-        //whiteSpace:"normal" style more adaptively
+        //whiteSpace:"normal" 
     } as CSSProperties,
     title: {
         color:"white",
         fontWeight:"bold",
-        fontSize:"2em",
+        fontSize:"1.7em", //Issue for mobile here
         //position:"absolute",
         //left:"50%",
         //transform:"translate(-50%,0)",

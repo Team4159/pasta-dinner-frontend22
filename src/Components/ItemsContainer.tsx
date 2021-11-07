@@ -2,6 +2,11 @@ import { CSSProperties } from "react"
 import { FunctionComponent, ReactNode, useEffect, useState } from "react"
 import ItemCard from "./ItemCard"
 
+declare global {
+    interface Window{
+        gapi:any
+    }
+}
 type ItemsContainerProps = { //fix expansion issues
     items?: {}[] 
     cards?: ReactNode[]
@@ -29,9 +34,28 @@ const ItemsContainer = (props: ItemsContainerProps):JSX.Element => {
     //Socket for updating the top bid for all users.
     const [socket, setSocket] = useState<WebSocket | undefined>()
     useEffect(() => {
-
+        return
     },[socket])
 
+    const useDocsAPI = async () => {
+        useEffect(() => {
+            window.gapi.load('client:auth2', async () => {
+                window.gapi.client.init({
+                    apiKey:process.env.REACT_APP_CLIENT_ID,
+                    clientId:process.env.REACT_APP_CLIENT_ID,
+                    scope:process.env.REACT_APP_GAPI_SCOPES
+                })
+                .then(() => window.gapi.client.load('docs'))
+                .then(async () => {
+                    const res = await window.gapi.client.docs.documents.get({
+                        documentId:process.env.REACT_APP_DOC_ID
+                    })
+                    console.log(res)
+                })
+            })
+        },[])
+    }
+    useDocsAPI()
     useEffect(() => {
         const getItems = async () => {
             try{
@@ -51,6 +75,7 @@ const ItemsContainer = (props: ItemsContainerProps):JSX.Element => {
         }
         getItems()
     }, [props.updateSignal])
+    
     return (
         <div style={styles.row}>
 

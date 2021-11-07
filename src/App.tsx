@@ -52,7 +52,6 @@ class App extends Component<Readonly<AppProps>, Readonly<AppState>> {
   setCurrentSelectedCard = (cardID?:number):void => this.setState({currentSelectedCard:cardID}, () => {})
 
   componentDidMount():void{
-    
   }
   render():JSX.Element{
     return (

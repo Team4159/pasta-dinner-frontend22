@@ -8,12 +8,6 @@ type EnterBidDialogProps = {
     currentCard?:number;
     setUpdateSignaller: ( )=> void
 }
-type EnterBidDialogState = {
-    emailText?:string;
-    phoneNumberText?:string;
-    bidAmount: string;
-    name:string
-}
 const styles = {
     textField: {
         marginRight: ".75em",
@@ -58,7 +52,7 @@ const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
 
 
     //Error handling for email, phone, bid, and name
-    const [emailError, setEmailError] = useState<boolean>(false)
+    const [emailError, setEmailError] = useState<boolean>(false) //If I could've done it readably, I would have used ternary
     const [phoneError, setPhoneError] = useState<boolean>(false)
     const [bidError, setBidError] = useState<boolean>(false)
     const [nameError, setNameError] = useState<boolean>(false)
@@ -96,6 +90,8 @@ const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
         const emailRegex:RegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         const phoneRegex:RegExp = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
         if(!phoneRegex.test(phoneNumberText)){
+            //Remember to validate against numbers and letters only + styling mobile + fix collpase and expand + docs
+            //+ transitions + multiple cases of errors
             setPhoneError(true)
             setPhoneHelperText("Please correctly format your phone number.")
             return false
