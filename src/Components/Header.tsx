@@ -13,13 +13,14 @@ const styles = {
         paddingRight:"1em",
         padding:".5em",
         minHeight:"2em",
-        whiteSpace:"normal"
+        whiteSpace:"normal",
+        flexWrap:'wrap'
         //whiteSpace:"normal" 
     } as CSSProperties,
     title: {
         color:"white",
         fontWeight:"bold",
-        fontSize:"1.7em", //Issue for mobile here
+        fontSize:"2em", //Issue for mobile here, change flex dir and size for mobile view
         //position:"absolute",
         //left:"50%",
         //transform:"translate(-50%,0)",
