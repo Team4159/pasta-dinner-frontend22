@@ -29,7 +29,10 @@ const styles = {
         flexDirection: detectMobile() ? "column":"row",
         alignItems:"center",
         justifyContent:"space-between"
-    } as CSSProperties
+    } as CSSProperties,
+    button: {
+        color:'#de1738'
+    }
 }
 
 const RetractBid = (props:RetractBidProps):JSX.Element => {
@@ -137,8 +140,8 @@ const RetractBid = (props:RetractBidProps):JSX.Element => {
                 <Box sx={styles.submissionContent}>
                     <Typography>{confirmationText}</Typography>
                     <DialogActions>
-                        <Button onClick={handleSubmitRetract}>Submit Bid</Button> {/*Expose all descriptions button in app.tsx*/}
-                        <Button onClick={close}>Close</Button>
+                        <Button sx={styles.button} onClick={handleSubmitRetract}>Submit Bid</Button> {/*Expose all descriptions button in app.tsx*/}
+                        <Button sx={styles.button} onClick={close}>Close</Button>
                     </DialogActions>
                 </Box>
             </DialogContent>

@@ -1,4 +1,4 @@
-import { Typography, Paper } from "@mui/material"
+import { Typography, Paper, Slide } from "@mui/material"
 import { Box } from "@mui/system"
 import { CSSProperties } from "react"
 import teamlogo from '../Images/4159-logo.png'
@@ -35,10 +35,16 @@ const styles = {
 }
 const Header = ():JSX.Element => {
     return (
-        <Box sx={styles.bg}>
-            <img alt="Team logo" src={teamlogo} style={styles.img}/>
-            <Typography sx={styles.title}>Cardinalbotics 2021 Pasta Picnic</Typography>
-        </Box> 
+        <Slide in direction={'down'} mountOnEnter timeout={{enter:1000}}>
+            <Box sx={styles.bg}>
+                <Slide in direction={'down'} mountOnEnter timeout={{enter:1500}}>
+                    <Box>
+                        <img alt="Team logo" src={teamlogo} style={styles.img}/>
+                        <Typography sx={styles.title}>Cardinalbotics 2021 Pasta Picnic</Typography>
+                    </Box>
+                </Slide>
+            </Box> 
+        </Slide>
     ) 
 }
 export default Header

@@ -9,6 +9,7 @@ import InstructionCard from './Components/InstructionCard';
 import RetractBidDialog from './Components/RetractBidDialog';
 //import addItem from './Misc/addItem.ts'
 import ItemsContainer from './Components/ItemsContainer';
+import { Slide } from '@mui/material';
 
 type AppProps = {}
 type AppState = {

@@ -1,4 +1,4 @@
-import { Card, CardContent, Paper, Typography } from "@mui/material"
+import { Card, CardContent, Paper, Slide, Typography } from "@mui/material"
 import { CSSProperties } from "react"
 
 type InstructionCardProps = {
@@ -44,7 +44,7 @@ const InstructionCard = (props:InstructionCardProps):JSX.Element => { //maybe re
         let deadline:Date = new Date() //Nov 13 at 2:00PM
         let timeLeft:string | null = null
         setInterval(():void => {
-
+            
         }, 1000)
         return ``
     }
@@ -65,16 +65,18 @@ const InstructionCard = (props:InstructionCardProps):JSX.Element => { //maybe re
         }
     }
     return (
-        <Card sx={styles.container}>
-            <CardContent sx={styles.card}>
-            <Paper sx={styles.paper}>
-                <Typography sx={styles.number}>{props.id}</Typography>
-            </Paper>
-            <Typography sx={styles.desc}>
-                {showDescriptionById(props.id)} 
-            </Typography>
-            </CardContent>
-        </Card>
+        <Slide in direction={'right'} mountOnEnter timeout={{enter:1500}}>
+            <Card sx={styles.container}> 
+                <CardContent sx={styles.card}>
+                    <Paper sx={styles.paper}>
+                        <Typography sx={styles.number}>{props.id}</Typography>
+                    </Paper>
+                    <Typography sx={styles.desc}>
+                        {showDescriptionById(props.id)} 
+                    </Typography>
+                </CardContent>
+            </Card>
+        </Slide>
     )
 }
 export default InstructionCard

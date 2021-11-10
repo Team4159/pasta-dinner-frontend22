@@ -1,4 +1,4 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Collapse, Container, Grid, Paper, Typography } from "@mui/material";
+import { Button, Card, CardActions, CardContent, CardMedia, Collapse, Container, Fade, Grid, Paper, Slide, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { Component, CSSProperties } from "react";
 import placeholder from "../Images/placeholder.jpg"
@@ -36,33 +36,34 @@ class ItemCard extends Component< Readonly<ItemCardProps>, Readonly<ItemCardStat
     render():JSX.Element {
         const {description, handleDialogOpen, handleRetractDialogOpen, topBid, itemName, startingPrice, id, name, imageName} = this.props
         return(
-            <Card sx={styles.card}>
-                <Grid>
-                    <CardMedia style={styles.media} component={"img"} image={imageName? `https://pastadinner.lren.cf/src/images/${imageName}`:placeholder} alt={"Image placeholder"}/>
-                </Grid>
-                <CardContent>
-                    <Typography variant={"h5"} align={"center"}>
-                        <Box component={"span"} sx={styles.name}>{itemName ? `#${id} ${itemName}`:"Item Title"}</Box>
-                    </Typography>
-                    <Typography align={"center"}>{startingPrice ? `Starting Price - $${this.getFormattedPrice(startingPrice)}`:"Starting Price - N/A"}</Typography>
-                    <Typography align="center">{topBid ? `Top Bid - ${name}: $${this.getFormattedPrice(topBid)}`:"Top Bid - N/A"}</Typography>
-                    <CardActions>
-                        <Button onClick={() => handleDialogOpen(id)}>Enter Bid</Button>
-                        <Button onClick={() => handleRetractDialogOpen(id)}>Retract Bid</Button>
-                    </CardActions>
-                    <Box component={"div"} sx={styles.expandMore}><ExpandMore onClick={this.handleIsExpanded}/></Box> {/* add rotate transition*/}
-                    <Collapse in={this.state.isExpanded} timeout="auto" unmountOnExit>
-                        <CardContent>
-                            <Typography>{description}</Typography>
-                            <Typography paragraph fontSize={".9em"}>
-                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Incidunt modi optio 
-                                unde architecto nihil adipisci magnam 
-                            </Typography>
-                        </CardContent>
-                    </Collapse>         
-                </CardContent>
-            </Card>
-            
+            <Fade in appear mountOnEnter timeout={{enter:1500}}>
+                <Card sx={styles.card}>
+                    <Grid>
+                        <CardMedia style={styles.media} component={"img"} image={imageName? `https://pastadinner.lren.cf/src/images/${imageName}`:placeholder} alt={"Image placeholder"}/>
+                    </Grid>
+                    <CardContent>
+                        <Typography variant={"h5"} align={"center"}>
+                            <Box component={"span"} sx={styles.name}>{itemName ? `#${id} ${itemName}`:"Item Title"}</Box>
+                        </Typography>
+                        <Typography align={"center"}>{startingPrice ? `Starting Price - $${this.getFormattedPrice(startingPrice)}`:"Starting Price - N/A"}</Typography>
+                        <Typography align="center">{topBid ? `Top Bid - ${name}: $${this.getFormattedPrice(topBid)}`:"Top Bid - N/A"}</Typography>
+                        <CardActions>
+                            <Button sx={styles.button}onClick={() => handleDialogOpen(id)}>Enter Bid</Button>
+                            <Button sx={styles.button} onClick={() => handleRetractDialogOpen(id)}>Retract Bid</Button>
+                        </CardActions>
+                        <Box component={"div"} sx={styles.expandMore}><ExpandMore onClick={this.handleIsExpanded}/></Box> {/* add rotate transition*/}
+                        <Collapse in={this.state.isExpanded} timeout="auto" unmountOnExit>
+                            <CardContent>
+                                <Typography>{description}</Typography>
+                                <Typography paragraph fontSize={".9em"}>
+                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Incidunt modi optio 
+                                    unde architecto nihil adipisci magnam 
+                                </Typography>
+                            </CardContent>
+                        </Collapse>         
+                    </CardContent>
+                </Card>
+            </Fade>
         )
     }
 }
@@ -86,6 +87,9 @@ const styles = {
     }, 
     media: {
         height:"9em",
-    } as CSSProperties
+    } as CSSProperties,
+    button: {
+        color:'#de1738'
+    }
 }
 export default ItemCard

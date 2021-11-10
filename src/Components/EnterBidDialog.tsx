@@ -26,8 +26,8 @@ const styles = {
         alignItems:"center",
         justifyContent:"space-between"
     } as CSSProperties,
-    button: {
-       
+    button: {   
+        color:'#de1738',
     },
     confirmationText: {
         color: '#A6D609'
