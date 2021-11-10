@@ -1,6 +1,5 @@
-import { WSA_E_CANCELLED } from "constants"
 import { CSSProperties, useRef } from "react"
-import { FunctionComponent, ReactNode, useEffect, useState } from "react"
+import { ReactNode, useEffect, useState } from "react"
 import ItemCard from "./ItemCard"
 
 declare global {
@@ -55,12 +54,12 @@ const ItemsContainer = (props: ItemsContainerProps):JSX.Element => {
                 console.log('Message received', event)  
             })
             socket.current?.close()
-        } //should also remove event listeners
+        } 
         
         
     }, [])
 
-    const useDocsAPI = async () => {
+    const useDocsAPI = async ():Promise<void> => {
         useEffect(() => {
             window.gapi.load('client:auth2', async () => {
                 window.gapi.client.init({
@@ -83,7 +82,7 @@ const ItemsContainer = (props: ItemsContainerProps):JSX.Element => {
     }
     //useDocsAPI()
     useEffect(() => {
-        const getItems = async () => {
+        const getItems = async ():Promise<void> => {
             try{
                 const res = await fetch(`${process.env.REACT_APP_API_URL}/users/getprices`, {
                     method: 'GET', 
