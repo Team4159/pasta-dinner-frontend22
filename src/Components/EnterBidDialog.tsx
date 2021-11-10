@@ -83,7 +83,11 @@ const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
             ( !name || name.split(" ").length < 2 ) &&
             ( !bidAmount || !(Number.isInteger(parseInt(bidAmount.toString()))) )
         ){
-
+            setEmailError(true)
+            setPhoneError(true)
+            setNameError(true)
+            setBidError(true)
+            return false
         } 
         
         //Triple field checks
@@ -92,7 +96,10 @@ const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
             ( !phoneNumberText || !phoneNumberText.split(" ") || !phoneRegex.test(phoneNumberText) ) &&
             ( !name || name.split(" ").length < 2 )
         ){
-
+            setEmailError(true)
+            setPhoneError(true)
+            setNameError(true)
+            return false
         }
 
         if( //Check for name, email, bid only
@@ -100,7 +107,10 @@ const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
             ( !emailText || !emailText.trim().length || !emailRegex.test(emailText) ) &&
             ( !bidAmount || !(Number.isInteger(parseInt(bidAmount.toString()))) )
         ){
-
+            setNameError(true)
+            setEmailError(true)
+            setBidError(true)
+            return false
         }
 
         if( //Check for name, phone, bid only
@@ -108,7 +118,10 @@ const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
             ( !name || name.split(" ").length < 2 ) &&
             ( !bidAmount || !(Number.isInteger(parseInt(bidAmount.toString()))) )
         ){
-
+            setPhoneError(true)
+            setNameError(true)
+            setBidError(true)
+            return false
         }
 
         if( //Check for email, phone, bid
@@ -116,7 +129,10 @@ const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
             ( !phoneNumberText || !phoneNumberText.split(" ") || !phoneRegex.test(phoneNumberText) ) &&
             ( !bidAmount || !(Number.isInteger(parseInt(bidAmount.toString()))) )
         ){
-
+            setEmailError(true)
+            setPhoneError(true)
+            setBidError(true)
+            return false
         }
 
         //Double field checks
@@ -124,42 +140,54 @@ const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
             ( !name || name.split(" ").length < 2 ) &&
             ( !emailText || !emailText.trim().length || !emailRegex.test(emailText) )
         ){
-
+            setNameError(true)
+            setEmailError(true)
+            return false
         }
 
         if( //Name, phone
             ( !phoneNumberText || !phoneNumberText.split(" ") || !phoneRegex.test(phoneNumberText) ) &&
             ( !name || name.split(" ").length < 2 )
         ){
-
+            setPhoneError(true)
+            setNameError(true)
+            return false
         }
 
         if( //Name, bid
             ( !name || name.split(" ").length < 2 ) &&
             ( !bidAmount || !(Number.isInteger(parseInt(bidAmount.toString()))) )
         ){
-
+            setNameError(true)
+            setBidError(true)
+            return false
         }
 
         if( //email, phone
             ( !emailText || !emailText.trim().length || !emailRegex.test(emailText) ) &&
             ( !phoneNumberText || !phoneNumberText.split(" ") || !phoneRegex.test(phoneNumberText) )
         ){
-
+            setEmailError(true)
+            setPhoneError(true)
+            return false
         }
 
         if( //email, bid
             ( !emailText || !emailText.trim().length || !emailRegex.test(emailText) ) &&
             ( !bidAmount || !(Number.isInteger(parseInt(bidAmount.toString()))) )
         ){
-
+            setEmailError(true)
+            setBidError(true)
+            return false
         }
 
         if( //Phone, bid
             ( !phoneNumberText || !phoneNumberText.split(" ") || !phoneRegex.test(phoneNumberText) ) &&
             ( !bidAmount || !(Number.isInteger(parseInt(bidAmount.toString()))) )
         ){
-
+            setPhoneError(true)
+            setBidError(true)
+            return false
         }
 
 
