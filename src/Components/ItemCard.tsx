@@ -1,6 +1,6 @@
-import { Button, Card, CardActions, CardContent, CardMedia, Collapse, Container, Paper, Typography } from "@mui/material";
+import { Button, Card, CardActions, CardContent, CardMedia, Collapse, Container, Grid, Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { Component } from "react";
+import React, { Component, CSSProperties } from "react";
 import placeholder from "../Images/placeholder.jpg"
 import ExpandMore from '@mui/icons-material/ExpandMore';
 
@@ -16,6 +16,8 @@ type ItemCardProps = {
     description?:string;
     handleDialogOpen: (cardID?:number) => void;
     handleRetractDialogOpen: (cardID?:number) => void;
+    name:string;
+    imageName?:string
 }
 class ItemCard extends Component< Readonly<ItemCardProps>, Readonly<ItemCardState> > {
     constructor(props:ItemCardProps){
@@ -32,16 +34,18 @@ class ItemCard extends Component< Readonly<ItemCardProps>, Readonly<ItemCardStat
     getFormattedPrice = (price:number):string => `${price}`.includes(".") ? `${price}`:`${price}.00` //Sam said get rid of cents?
     
     render():JSX.Element {
-        const {description, handleDialogOpen, handleRetractDialogOpen, topBid, itemName, startingPrice, id} = this.props
+        const {description, handleDialogOpen, handleRetractDialogOpen, topBid, itemName, startingPrice, id, name, imageName} = this.props
         return(
             <Card sx={styles.card}>
-                <CardMedia component={"img"} image={placeholder} alt={"Image placeholder"}/>
+                <Grid>
+                    <CardMedia style={styles.media} component={"img"} image={imageName? `https://pastadinner.lren.cf/src/images/${imageName}`:placeholder} alt={"Image placeholder"}/>
+                </Grid>
                 <CardContent>
                     <Typography variant={"h5"} align={"center"}>
                         <Box component={"span"} sx={styles.name}>{itemName ? `#${id} ${itemName}`:"Item Title"}</Box>
                     </Typography>
                     <Typography align={"center"}>{startingPrice ? `Starting Price - $${this.getFormattedPrice(startingPrice)}`:"Starting Price - N/A"}</Typography>
-                    <Typography align="center">{topBid ? `Top Bid - $${this.getFormattedPrice(topBid)}`:"Top Bid - N/A"}</Typography>
+                    <Typography align="center">{topBid ? `Top Bid - ${name}: $${this.getFormattedPrice(topBid)}`:"Top Bid - N/A"}</Typography>
                     <CardActions>
                         <Button onClick={() => handleDialogOpen(id)}>Enter Bid</Button>
                         <Button onClick={() => handleRetractDialogOpen(id)}>Retract Bid</Button>
@@ -79,6 +83,9 @@ const styles = {
         alignItems:"flex-end",
         //border:"1px solid black",
         transform:"translate(7%,1.5em)"
-    }
+    }, 
+    media: {
+        height:"9em",
+    } as CSSProperties
 }
 export default ItemCard

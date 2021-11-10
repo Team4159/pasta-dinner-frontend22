@@ -1,6 +1,6 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Typography } from "@mui/material"
 import { ChangeEvent,CSSProperties,useEffect, useState } from "react"
-
+import detectMobile from '../Misc/detectMobile'
 
 type EnterBidDialogProps = {
     isOpen:boolean;
@@ -22,7 +22,7 @@ const styles = {
     },
     submissionContent: {
         display:"flex",
-        flexDirection:"row",
+        flexDirection: detectMobile() ? "column":"row",
         alignItems:"center",
         justifyContent:"space-between"
     } as CSSProperties,
@@ -157,7 +157,7 @@ const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
             )
             console.log(res.text())
             if(res.status === 200) {
-                props.setUpdateSignaller()
+                //props.setUpdateSignaller()
                 clearInputs()
                 clearErrors()
                 setConfirmationText("Your bid has been submitted.")

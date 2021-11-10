@@ -7,7 +7,7 @@ import Instructions from './Components/Instructions';
 import EnterBidDialog from './Components/EnterBidDialog';
 import InstructionCard from './Components/InstructionCard';
 import RetractBidDialog from './Components/RetractBidDialog';
-import addItem from './addItem'
+//import addItem from './Misc/addItem.ts'
 import ItemsContainer from './Components/ItemsContainer';
 
 type AppProps = {}
@@ -66,6 +66,7 @@ class App extends Component<Readonly<AppProps>, Readonly<AppState>> {
           updateSignal={this.state.updateSignaller}
           handleDialogOpen={this.handleDialogOpen} 
           handleRetractDialogOpen={this.handleRetractDialogOpen}
+          setUpdateSignaller={this.setUpdateSignaller}
         />
         <EnterBidDialog isOpen={this.state.dialogIsOpen} handleDialogClose={this.handleDialogClose} currentCard={this.state.currentSelectedCard} setUpdateSignaller={this.setUpdateSignaller}/>
         <RetractBidDialog isOpen={this.state.retractDialogIsOpen} currentCard={this.state.currentSelectedCard} handleDialogClose={this.handleRetractDialogClose} setUpdateSignaller={this.setUpdateSignaller}/>

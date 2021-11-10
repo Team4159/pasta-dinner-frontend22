@@ -1,5 +1,7 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Typography } from "@mui/material"
-import { ChangeEvent, useState } from "react"
+import { Email } from "@mui/icons-material"
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Typography } from "@mui/material"
+import { ChangeEvent, CSSProperties, useState } from "react"
+import detectMobile from "../Misc/detectMobile"
 
 type RetractBidProps = {
     isOpen:boolean;
@@ -21,14 +23,20 @@ const styles = {
     },
     title: {
         align:"center"
-    }
+    },
+    submissionContent: {
+        display:"flex",
+        flexDirection: detectMobile() ? "column":"row",
+        alignItems:"center",
+        justifyContent:"space-between"
+    } as CSSProperties
 }
 
 const RetractBid = (props:RetractBidProps):JSX.Element => {
     const [bidAmount, setBidAmount] = useState<string>("")
-    const [name, setName] = useState<string>("")
+    const [email, setEmail] = useState<string>("")
 
-    const [nameError, setNameError] = useState<boolean>(false) //finish later
+    const [emailError, setEmailError] = useState<boolean>(false) //finish later
     const [bidError, setBidError] = useState<boolean>(false)
 
     const [confirmationText, setConfirmationText] = useState("")
@@ -38,21 +46,26 @@ const RetractBid = (props:RetractBidProps):JSX.Element => {
             setBidError(true)
             return false
         } 
-        if(!name || name.split(" ").length < 2){
-            setNameError(true)
+        if(!email || !email.trim().length){
+            setEmailError(true)
+            return false
+        }
+        const emailRegex:RegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        if(!emailRegex.test(email)){
+            setEmailError(true)
             return false
         }
         return true
     }
     const clearErrors = ():void => {
         setBidError(false)
-        setNameError(false)
+        setEmailError(false)
     }
 
-    const handleNameChange = (e:ChangeEvent<HTMLInputElement>):void => setName(e.currentTarget.value)
+    const handleEmailChange = (e:ChangeEvent<HTMLInputElement>):void => setEmail(e.currentTarget.value)
     const handleBidAmountChange = (e:ChangeEvent<HTMLInputElement>):void => setBidAmount(e.currentTarget.value)
     const clearInputs = ():void => {
-        setName("")
+        setEmail("")
         setBidAmount("")
         
     }
@@ -67,7 +80,7 @@ const RetractBid = (props:RetractBidProps):JSX.Element => {
         try {
             const body:RetractBidInfo = {
                 "id": props.currentCard,
-                "name": name,
+                "name": email,
                 "price": bidAmount
             }
             const res = await fetch(
@@ -83,7 +96,7 @@ const RetractBid = (props:RetractBidProps):JSX.Element => {
             )
             console.log(res.text())
             if(res.status === 200){
-                props.setUpdateSignaller()
+                //props.setUpdateSignaller()
                 clearErrors()
                 clearInputs()
                 setConfirmationText("Your bid has been retracted.")
@@ -108,11 +121,11 @@ const RetractBid = (props:RetractBidProps):JSX.Element => {
                     Enter Contact Info
                 </DialogContentText>
                 <TextField 
-                    error={nameError}
-                    helperText={nameError ? "First Last format is required.":"John Doe"}
-                    value={name} 
-                    label={"Name"} 
-                    onChange={handleNameChange} 
+                    error={emailError}
+                    helperText={emailError ? "A valid email is required.":"Johndoe@gmail.com"}
+                    value={email} 
+                    label={"Email"} 
+                    onChange={handleEmailChange} 
                     sx={styles.textField}/>
                 <TextField 
                     error={bidError}
@@ -121,11 +134,13 @@ const RetractBid = (props:RetractBidProps):JSX.Element => {
                     label={"Bid Amount"} 
                     onChange={handleBidAmountChange} 
                     sx={styles.textField}/>
-                <Typography>{confirmationText}</Typography>
-                <DialogActions>
-                    <Button onClick={handleSubmitRetract}>Submit Bid</Button> {/*Expose all descriptions button in app.tsx*/}
-                    <Button onClick={close}>Close</Button>
-                </DialogActions>
+                <Box sx={styles.submissionContent}>
+                    <Typography>{confirmationText}</Typography>
+                    <DialogActions>
+                        <Button onClick={handleSubmitRetract}>Submit Bid</Button> {/*Expose all descriptions button in app.tsx*/}
+                        <Button onClick={close}>Close</Button>
+                    </DialogActions>
+                </Box>
             </DialogContent>
         </Dialog>
     )
