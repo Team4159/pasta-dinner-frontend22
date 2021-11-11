@@ -120,7 +120,7 @@ const ItemsContainer = (props: ItemsContainerProps):JSX.Element => {
                 />
             
             )}
-            <ItemCard  
+            {/* <ItemCard  
             handleDialogOpen={props.handleDialogOpen} 
             handleRetractDialogOpen={props.handleRetractDialogOpen} 
             name={"Name"}
@@ -145,7 +145,7 @@ const ItemsContainer = (props: ItemsContainerProps):JSX.Element => {
             handleDialogOpen={props.handleDialogOpen} 
             handleRetractDialogOpen={props.handleRetractDialogOpen} 
             name={"Name"}
-            />
+            /> */}
         </div>
     )
 }

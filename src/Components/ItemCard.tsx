@@ -1,6 +1,6 @@
 import { Button, Card, CardActions, CardContent, CardMedia, Collapse, Container, Fade, Grid, Paper, Slide, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { Component, CSSProperties } from "react";
+import React, { Component, createRef, CSSProperties, RefObject } from "react";
 import placeholder from "../Images/placeholder.jpg"
 import ExpandMore from '@mui/icons-material/ExpandMore';
 
@@ -20,15 +20,23 @@ type ItemCardProps = {
     imageName?:string
 }
 class ItemCard extends Component< Readonly<ItemCardProps>, Readonly<ItemCardState> > {
+    private heightRef: RefObject<any>
     constructor(props:ItemCardProps){
         super(props);
+        this.heightRef = createRef()
         this.state = {
             timeLeft: undefined,
-            isExpanded:false
+            isExpanded:false,
         }
     }
+    componentDidMount(){
+        console.log(this.heightRef.current.clientHeight > 396)
+    }
+    componentDidUpdate(prevProps:ItemCardProps, prevState:ItemCardState){
+       
+    }
     handleIsExpanded = ():boolean => {
-        this.setState({isExpanded: !this.state.isExpanded})
+        this.setState({isExpanded: !this.state.isExpanded}) //Fix here
         return this.state.isExpanded
     }
     getFormattedPrice = (price:number):string => `${price}`.includes(".") ? `${price}`:`${price}.00` //Sam said get rid of cents?
@@ -37,7 +45,7 @@ class ItemCard extends Component< Readonly<ItemCardProps>, Readonly<ItemCardStat
         const {description, handleDialogOpen, handleRetractDialogOpen, topBid, itemName, startingPrice, id, name, imageName} = this.props
         return(
             <Fade in appear mountOnEnter timeout={{enter:1500}}>
-                <Card sx={styles.card}>
+                <Card ref={this.heightRef} sx={styles.card}>
                     <Grid>
                         <CardMedia style={styles.media} component={"img"} image={imageName? `https://pastadinner.lren.cf/src/images/${imageName}`:placeholder} alt={"Image placeholder"}/>
                     </Grid>

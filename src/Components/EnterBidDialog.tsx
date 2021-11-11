@@ -63,16 +63,13 @@ const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
     const [nameHelperText, setNameHelperText] = useState<string>("John Doe") */
 
     const [confirmationText, setConfirmationText] = useState<string>("")
+    const [validFields, setValidFields] = useState<boolean>(true)
 
     const clearErrors = ():void => {
         setEmailError(false)
-        //setEmailHelperText("Johndoe@gmail.com")
         setPhoneError(false)
-        //setPhoneHelperText("1234567890")
         setBidError(false)
-        //setBidHelperText("20")
-        setNameError(false)
-        //setNameHelperText("John Doe")
+        setNameError(false) 
     }
     const handleErrors = ():boolean => {
         const emailRegex:RegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -232,7 +229,6 @@ const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
             //setNameHelperText("First Last format is required.")
             return false
         }
-        //Need to validate >$2
         return true
     }
     const clearInputs = ():void => {
@@ -249,7 +245,7 @@ const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
         props.handleDialogClose(props.currentCard)
     }
     const handleSubmitBid = async ():Promise<void | Response> => {
-        if(!handleErrors()) return
+        if(!handleErrors()) return console.log("Did not post")
         
        //AJAX calls
        const bidInfo:BidInfo = {
