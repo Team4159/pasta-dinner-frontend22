@@ -3,7 +3,6 @@ import { Box } from "@mui/system";
 import React, { Component, createRef, CSSProperties, RefObject } from "react";
 import placeholder from "../Images/placeholder.jpg"
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import { TitleSharp } from "@mui/icons-material";
 
 type ItemCardState = { //capitalize first letter for each word in itemName, add decimals*
     timeLeft?:number;

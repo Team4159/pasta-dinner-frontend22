@@ -7,6 +7,7 @@ type EnterBidDialogProps = {
     handleDialogClose: (cardID?:number) => void;
     currentCard?:number;
     setUpdateSignaller: ( )=> void
+    currentTopBid?:number
 }
 const styles = {
     textField: {
@@ -180,7 +181,7 @@ const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
         <Dialog open={props.isOpen}>
             <DialogContent>
                 <DialogTitle>
-                    <Typography variant={"h5"} align="left">Bidding?</Typography>
+                    <Typography variant={"h5"} align="left">Top Bid - {props.currentTopBid ? props.currentTopBid:"N/A"}</Typography>
                 </DialogTitle>
                 <DialogContentText align="left"> {/*give margin bottom*/}
                     Enter Contact Info

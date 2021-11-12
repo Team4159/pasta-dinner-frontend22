@@ -16,6 +16,10 @@ type ItemsContainerProps = { //fix expansion issues
     handleDialogOpen: (cardID?:number) => void;
     handleRetractDialogOpen: (cardID?:number) => void;
     updateSignal:boolean
+
+    currentTopBid?:number
+    currentCard?:number
+    setCurrentTopBid: (bid?:number) => void
 }
 const styles = {
     row:{
@@ -46,6 +50,7 @@ const ItemsContainer = (props: ItemsContainerProps):JSX.Element => {
         socket.current.onmessage = (event:MessageEvent) => {
             props.setUpdateSignaller()
             console.log('Message received', event)  
+
         }
         return () => {
             socket.current?.removeEventListener('open', () => console.log('connected'))
@@ -92,15 +97,17 @@ const ItemsContainer = (props: ItemsContainerProps):JSX.Element => {
                         "Access-Control-Allow-Origin": "*"
                     }
                 })
+                const currentTopbid:Response = await fetch(`${process.env.REACT_APP_API_URL}/users/gethighestbid?id=${props.currentCard ? props.currentCard:2}`)
                 const data = await res.json()
                 console.log(data)
+                props.setCurrentTopBid((await currentTopbid.json()).price)
                 setItems(data) 
             } catch(err) {
                 console.log("Could not get items " + err)
             } 
         }
         getItems()
-    }, [props.updateSignal]) //updateSignal is not necessary, but I'm lazy
+    }, [props.updateSignal, props.currentCard]) //updateSignal is not necessary, but I'm lazy
     
     return (
         <div style={styles.row}>
