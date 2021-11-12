@@ -3,10 +3,12 @@ import { Box } from "@mui/system";
 import React, { Component, createRef, CSSProperties, RefObject } from "react";
 import placeholder from "../Images/placeholder.jpg"
 import ExpandMore from '@mui/icons-material/ExpandMore';
+import { TitleSharp } from "@mui/icons-material";
 
 type ItemCardState = { //capitalize first letter for each word in itemName, add decimals*
     timeLeft?:number;
     isExpanded:boolean;
+    heightRef:any //RefObject<number>
 }
 type ItemCardProps = {
     id?:number;
@@ -18,6 +20,9 @@ type ItemCardProps = {
     handleRetractDialogOpen: (cardID?:number) => void;
     name:string;
     imageName?:string
+
+    isExpanded:boolean
+    setIsExpanded: (b:boolean) => void
 }
 class ItemCard extends Component< Readonly<ItemCardProps>, Readonly<ItemCardState> > {
     private heightRef: RefObject<any>
@@ -27,16 +32,21 @@ class ItemCard extends Component< Readonly<ItemCardProps>, Readonly<ItemCardStat
         this.state = {
             timeLeft: undefined,
             isExpanded:false,
+            heightRef: this.heightRef
         }
     }
     componentDidMount(){
-        console.log(this.heightRef.current.clientHeight > 396)
+
     }
     componentDidUpdate(prevProps:ItemCardProps, prevState:ItemCardState){
-       
+       if(this.heightRef.current.clientHeight > 420) console.log("State changed 420")
+       else if(this.heightRef.current.clientHeight >= 420) console.log("State changed above")  
+        
     }
-    handleIsExpanded = ():boolean => {
-        this.setState({isExpanded: !this.state.isExpanded}) //Fix here
+    handleIsExpanded = ():boolean => {    
+        this.setState({isExpanded: !this.state.isExpanded}, () => {
+            this.props.setIsExpanded(this.state.isExpanded)
+        }) //Fix here
         return this.state.isExpanded
     }
     getFormattedPrice = (price:number):string => `${price}`.includes(".") ? `${price}`:`${price}.00` //Sam said get rid of cents?
@@ -60,7 +70,7 @@ class ItemCard extends Component< Readonly<ItemCardProps>, Readonly<ItemCardStat
                             <Button sx={styles.button} onClick={() => handleRetractDialogOpen(id)}>Retract Bid</Button>
                         </CardActions>
                         <Box component={"div"} sx={styles.expandMore}><ExpandMore onClick={this.handleIsExpanded}/></Box> {/* add rotate transition*/}
-                        <Collapse in={this.state.isExpanded} timeout="auto" unmountOnExit>
+                        <Collapse in={this.props.isExpanded/* this.state.isExpanded */} timeout="auto" unmountOnExit>
                             <CardContent>
                                 <Typography>{description}</Typography>
                                 <Typography paragraph fontSize={".9em"}>

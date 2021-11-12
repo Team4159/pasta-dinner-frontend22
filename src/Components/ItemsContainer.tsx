@@ -31,6 +31,7 @@ const styles = {
 const ItemsContainer = (props: ItemsContainerProps):JSX.Element => {
 
     const [items, setItems] = useState<any[]>([])
+    const [isExpanded, setIsExpanded] = useState<boolean>(false)
 
     //Socket for updating the top bid for all users.
     const socket = useRef<WebSocket>()
@@ -107,6 +108,8 @@ const ItemsContainer = (props: ItemsContainerProps):JSX.Element => {
             {items.map(item =>
                 //console.log(`${item.id} \n ${item.name} \n ${item.startingPrice} \n ${item.description} ${item.highestBid} \n\n`)
                 <ItemCard 
+                    isExpanded={isExpanded}
+                    setIsExpanded={setIsExpanded}
                     key={item.id}
                     id={item.id}
                     handleDialogOpen={props.handleDialogOpen} 
@@ -120,32 +123,42 @@ const ItemsContainer = (props: ItemsContainerProps):JSX.Element => {
                 />
             
             )}
-            {/* <ItemCard  
+             <ItemCard 
+             isExpanded={isExpanded}
+             setIsExpanded={setIsExpanded} 
             handleDialogOpen={props.handleDialogOpen} 
             handleRetractDialogOpen={props.handleRetractDialogOpen} 
             name={"Name"}
             />
              <ItemCard  
+             isExpanded={isExpanded}
+             setIsExpanded={setIsExpanded}
             handleDialogOpen={props.handleDialogOpen} 
             handleRetractDialogOpen={props.handleRetractDialogOpen} 
             name={"Name"}
             />
              <ItemCard  
+             isExpanded={isExpanded}
+             setIsExpanded={setIsExpanded}
             handleDialogOpen={props.handleDialogOpen} 
             handleRetractDialogOpen={props.handleRetractDialogOpen} 
 
             name={"Name"}
             />
              <ItemCard  
+             isExpanded={isExpanded}
+             setIsExpanded={setIsExpanded}
             handleDialogOpen={props.handleDialogOpen} 
             handleRetractDialogOpen={props.handleRetractDialogOpen} 
             name={"Name"}
             />
              <ItemCard  
+             isExpanded={isExpanded}
+             setIsExpanded={setIsExpanded}
             handleDialogOpen={props.handleDialogOpen} 
             handleRetractDialogOpen={props.handleRetractDialogOpen} 
             name={"Name"}
-            /> */}
+            /> 
         </div>
     )
 }

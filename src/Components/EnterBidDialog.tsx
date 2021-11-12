@@ -63,7 +63,7 @@ const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
     const [nameHelperText, setNameHelperText] = useState<string>("John Doe") */
 
     const [confirmationText, setConfirmationText] = useState<string>("")
-    const [validFields, setValidFields] = useState<boolean>(true)
+    //const [validFields, setValidFields] = useState<boolean>(true)
 
     const clearErrors = ():void => {
         setEmailError(false)
@@ -74,138 +74,24 @@ const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
     const handleErrors = ():boolean => {
         const emailRegex:RegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         const phoneRegex:RegExp = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
-        if( //Checks all 4 simultaneously
-            ( !emailText || !emailText.trim().length || !emailRegex.test(emailText) ) &&
-            ( !phoneNumberText || !phoneNumberText.split(" ") || !phoneRegex.test(phoneNumberText) ) &&
-            ( !name || name.split(" ").length < 2 ) &&
-            ( !bidAmount || !(Number.isInteger(parseInt(bidAmount.toString()))) )
-        ){
-            setEmailError(true)
-            setPhoneError(true)
-            setNameError(true)
-            setBidError(true)
-            return false
-        } 
-        
-        //Triple field checks
-        if( //Check for name, email, phone only
-            ( !emailText || !emailText.trim().length || !emailRegex.test(emailText) ) &&
-            ( !phoneNumberText || !phoneNumberText.split(" ") || !phoneRegex.test(phoneNumberText) ) &&
-            ( !name || name.split(" ").length < 2 )
-        ){
-            setEmailError(true)
-            setPhoneError(true)
-            setNameError(true)
-            return false
-        }
-
-        if( //Check for name, email, bid only
-            ( !name || name.split(" ").length < 2 ) &&
-            ( !emailText || !emailText.trim().length || !emailRegex.test(emailText) ) &&
-            ( !bidAmount || !(Number.isInteger(parseInt(bidAmount.toString()))) )
-        ){
-            setNameError(true)
-            setEmailError(true)
-            setBidError(true)
-            return false
-        }
-
-        if( //Check for name, phone, bid only
-            ( !phoneNumberText || !phoneNumberText.split(" ") || !phoneRegex.test(phoneNumberText) ) &&
-            ( !name || name.split(" ").length < 2 ) &&
-            ( !bidAmount || !(Number.isInteger(parseInt(bidAmount.toString()))) )
-        ){
-            setPhoneError(true)
-            setNameError(true)
-            setBidError(true)
-            return false
-        }
-
-        if( //Check for email, phone, bid
-            ( !emailText || !emailText.trim().length || !emailRegex.test(emailText) ) &&
-            ( !phoneNumberText || !phoneNumberText.split(" ") || !phoneRegex.test(phoneNumberText) ) &&
-            ( !bidAmount || !(Number.isInteger(parseInt(bidAmount.toString()))) )
-        ){
-            setEmailError(true)
-            setPhoneError(true)
-            setBidError(true)
-            return false
-        }
-
-        //Double field checks
-        if( //Name, email
-            ( !name || name.split(" ").length < 2 ) &&
-            ( !emailText || !emailText.trim().length || !emailRegex.test(emailText) )
-        ){
-            setNameError(true)
-            setEmailError(true)
-            return false
-        }
-
-        if( //Name, phone
-            ( !phoneNumberText || !phoneNumberText.split(" ") || !phoneRegex.test(phoneNumberText) ) &&
-            ( !name || name.split(" ").length < 2 )
-        ){
-            setPhoneError(true)
-            setNameError(true)
-            return false
-        }
-
-        if( //Name, bid
-            ( !name || name.split(" ").length < 2 ) &&
-            ( !bidAmount || !(Number.isInteger(parseInt(bidAmount.toString()))) )
-        ){
-            setNameError(true)
-            setBidError(true)
-            return false
-        }
-
-        if( //email, phone
-            ( !emailText || !emailText.trim().length || !emailRegex.test(emailText) ) &&
-            ( !phoneNumberText || !phoneNumberText.split(" ") || !phoneRegex.test(phoneNumberText) )
-        ){
-            setEmailError(true)
-            setPhoneError(true)
-            return false
-        }
-
-        if( //email, bid
-            ( !emailText || !emailText.trim().length || !emailRegex.test(emailText) ) &&
-            ( !bidAmount || !(Number.isInteger(parseInt(bidAmount.toString()))) )
-        ){
-            setEmailError(true)
-            setBidError(true)
-            return false
-        }
-
-        if( //Phone, bid
-            ( !phoneNumberText || !phoneNumberText.split(" ") || !phoneRegex.test(phoneNumberText) ) &&
-            ( !bidAmount || !(Number.isInteger(parseInt(bidAmount.toString()))) )
-        ){
-            setPhoneError(true)
-            setBidError(true)
-            return false
-        }
-
-
-        //Single field checks
-        //Email tests; 1 field only
+        let validFields = true;
         if(!emailText || !emailText.trim().length){
             setEmailError(true)
             //setEmailHelperText("An email is required.")
-            return false
+            validFields = false;
         }
+        
         if(!emailRegex.test(emailText)){
             setEmailError(true)
             //setEmailHelperText("Please correctly format your email.")
-            return false
+            validFields = false;
         }
 
         //Phone number tests;1 field only
         if(!phoneNumberText || !phoneNumberText.split(" ")){
             setPhoneError(true)
             //setPhoneHelperText("A phone number is required.")
-            return false
+            validFields = false;
         }
 
         if(!phoneRegex.test(phoneNumberText)){
@@ -213,23 +99,24 @@ const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
             //+ transitions + multiple cases of errors
             setPhoneError(true)
             //setPhoneHelperText("Please correctly format your phone number.")
-            return false
+            validFields = false;
         }
         
         //Bid test;1 field only
         if(!bidAmount || !(Number.isInteger(parseInt(bidAmount.toString())))){
             setBidError(true)
             //setBidHelperText("A whole number bid is required.")
-            return false
+            validFields = false;
         } 
 
         //Name test;1 field only
         if(!name || name.split(" ").length < 2){
             setNameError(true)
             //setNameHelperText("First Last format is required.")
-            return false
+            validFields = false;
         }
-        return true
+        //Need to validate >$2
+        return validFields;
     }
     const clearInputs = ():void => {
         setEmailText("");
@@ -277,7 +164,10 @@ const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
                 setConfirmationText("Your bid has been submitted.")
                 setTimeout(():void => setConfirmationText(""), 5000)
             } //AND change top bid. Have itemscontainer watch for some value submit/retract bid changes
-            else console.log("not 200") //error system
+            else {
+                console.log("not 200")
+                setBidError(true)
+            } //error system
        } catch(err){
            console.error(err)
        }
@@ -297,27 +187,30 @@ const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
                 </DialogContentText>
                 <TextField 
                     error={nameError} 
-                    helperText={nameError ? "Invalid field.":"John Doe"} 
+                    helperText={nameError ? "Please use First Last format.":"John Doe"} 
                     value={name} label={"Name"} 
                     onChange={handleNameChange} 
                     sx={styles.textField}/>
                 <TextField 
+                    type={"email"}
                     error={emailError} 
                     helperText={emailError ? "Invalid field.":"Johndoe@gmail.com"} 
                     value={emailText} label={"Email"} 
                     onChange={handleEmailChange} 
                     sx={styles.textField}/> {/*do validation later;name+email marginBottom*/}
                 <TextField 
+                    type={"tel"}
                     error={phoneError} 
-                    helperText={phoneError ? "Invalid field.":"1234567890"} 
+                    helperText={phoneError ? "Please use digits only.":"1234567890"} 
                     value={phoneNumberText} 
                     label={"Phone Number"} 
                     onChange={handlePhoneNumberChange} 
                     margin={"normal"} 
                     sx={styles.textField}/>
                 <TextField 
+                    type={"tel"}
                     error={bidError} 
-                    helperText={bidError ? "Invalid field":"20"} 
+                    helperText={bidError ? "Please use only whole numbers at least $2 more than the last bid.":"20"} 
                     value={bidAmount} 
                     label={"Bid Amount"} 
                     onChange={handleBidAmountChange} 
