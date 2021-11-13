@@ -87,7 +87,7 @@ const RetractBid = (props:RetractBidProps):JSX.Element => {
                 "price": bidAmount
             }
             const res = await fetch(
-                `${process.env.REACT_APP_API_URL}/users/removebid`, 
+                `https://${process.env.REACT_APP_API_URL}/users/removebid`, 
                 {
                     method:'POST',  
                     headers: {

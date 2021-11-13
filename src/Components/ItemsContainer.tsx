@@ -41,7 +41,7 @@ const ItemsContainer = (props: ItemsContainerProps):JSX.Element => {
     const socket = useRef<WebSocket>()
     useEffect(() => {
         try {
-            socket.current = new WebSocket('ws://pastadinner.lren.cf:8082') //env makes it null sadly
+            socket.current = new WebSocket(`wss://${process.env.REACT_APP_API_URL}/websocket`)
         } catch(error) {
             return console.error(error)
         }
@@ -90,14 +90,14 @@ const ItemsContainer = (props: ItemsContainerProps):JSX.Element => {
     useEffect(() => {
         const getItems = async ():Promise<void> => {
             try{
-                const res = await fetch(`${process.env.REACT_APP_API_URL}/users/getprices`, {
+                const res = await fetch(`https://${process.env.REACT_APP_API_URL}/users/getprices`, {
                     method: 'GET', 
                     mode:'cors',
                     headers:{
                         "Access-Control-Allow-Origin": "*"
                     }
                 })
-                const currentTopbid:Response = await fetch(`${process.env.REACT_APP_API_URL}/users/gethighestbid?id=${props.currentCard ? props.currentCard:2}`)
+                const currentTopbid:Response = await fetch(`https://${process.env.REACT_APP_API_URL}/users/gethighestbid?id=${props.currentCard ? props.currentCard:2}`)
                 const data = await res.json()
                 console.log(data)
                 props.setCurrentTopBid((await currentTopbid.json()).price)

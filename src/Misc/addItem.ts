@@ -9,7 +9,7 @@ const addItem = async (name:string, price:number,desc:string):Promise<void> => {
         price: price,
         description:desc
    }
-   const res = await fetch(`${process.env.REACT_APP_API_URL}/users/additem}`, {
+   const res = await fetch(`https://${process.env.REACT_APP_API_URL}/users/additem}`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         mode:'cors',

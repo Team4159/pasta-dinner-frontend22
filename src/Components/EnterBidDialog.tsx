@@ -147,7 +147,7 @@ const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
        try{
             console.log(bidInfo)
             const res = await fetch(
-                `${process.env.REACT_APP_API_URL}/users/addbid`, 
+                `https://${process.env.REACT_APP_API_URL}/users/addbid`, 
                 {
                     method:'POST',
                     headers: {
