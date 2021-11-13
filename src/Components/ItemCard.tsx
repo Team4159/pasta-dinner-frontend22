@@ -105,7 +105,7 @@ const styles = {
         transform:"translate(7%,1.5em)"
     }, 
     media: {
-        height:"9em",
+        height:"10em",
     } as CSSProperties,
     button: {
         color:'#de1738'
