@@ -32,6 +32,9 @@ const styles = {
     } as CSSProperties,
     button: {
         color:'#de1738'
+    },
+    confirmationText: {
+        color: '#A6D609'
     }
 }
 
@@ -118,7 +121,7 @@ const RetractBid = (props:RetractBidProps):JSX.Element => {
         <Dialog open={props.isOpen}>
             <DialogContent>
                 <DialogTitle>
-                    <Typography variant={"h5"} align="left">Bidding?</Typography>
+                    <Typography variant={"h5"} align="left">Retract Bid</Typography>
                 </DialogTitle>
                 <DialogContentText align="left"> {/*give margin bottom*/}
                     Enter Contact Info
@@ -138,7 +141,7 @@ const RetractBid = (props:RetractBidProps):JSX.Element => {
                     onChange={handleBidAmountChange} 
                     sx={styles.textField}/>
                 <Box sx={styles.submissionContent}>
-                    <Typography>{confirmationText}</Typography>
+                    <Typography sx={styles.confirmationText}>{confirmationText}</Typography>
                     <DialogActions>
                         <Button sx={styles.button} onClick={handleSubmitRetract}>Submit Bid</Button> {/*Expose all descriptions button in app.tsx*/}
                         <Button sx={styles.button} onClick={close}>Close</Button>

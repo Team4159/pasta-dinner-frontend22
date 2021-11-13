@@ -50,7 +50,6 @@ const ItemsContainer = (props: ItemsContainerProps):JSX.Element => {
         socket.current.onmessage = (event:MessageEvent) => {
             props.setUpdateSignaller()
             console.log('Message received', event)  
-
         }
         return () => {
             socket.current?.removeEventListener('open', () => console.log('connected'))
@@ -97,17 +96,28 @@ const ItemsContainer = (props: ItemsContainerProps):JSX.Element => {
                         "Access-Control-Allow-Origin": "*"
                     }
                 })
-                const currentTopbid:Response = await fetch(`https://${process.env.REACT_APP_API_URL}/users/gethighestbid?id=${props.currentCard ? props.currentCard:2}`)
+                //const currentTopbid:Response = await fetch(`https://${process.env.REACT_APP_API_URL}/users/gethighestbid?id=${props.currentCard ? props.currentCard:2}`)
                 const data = await res.json()
                 console.log(data)
-                props.setCurrentTopBid((await currentTopbid.json()).price)
+               // props.setCurrentTopBid((await currentTopbid.json()).price)
                 setItems(data) 
             } catch(err) {
                 console.log("Could not get items" + err)
             } 
         }
         getItems()
-    }, [props.updateSignal, props.currentCard]) //updateSignal is not necessary, but I'm lazy
+    }, [props.updateSignal, /* props.currentCard */]) //updateSignal is not necessary, but I'm lazy
+    useEffect(() => {
+        try {
+            const getTopBid = async ():Promise<void> => {
+                const currentTopbid:Response = await fetch(`https://${process.env.REACT_APP_API_URL}/users/gethighestbid?id=${props.currentCard ? props.currentCard:2}`, {method:'GET',mode:'cors'})
+                props.setCurrentTopBid((await currentTopbid.json()).price)
+            }
+            getTopBid()
+        } catch(err) {
+            console.log(err)
+        }
+    }, [props.currentCard, props.updateSignal]) 
     
     return (
         <div style={styles.row}>

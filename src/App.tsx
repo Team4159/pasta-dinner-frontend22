@@ -52,7 +52,10 @@ class App extends Component<Readonly<AppProps>, Readonly<AppState>> {
   setCurrentSelectedCard = (cardID?:number):void => this.setState({currentSelectedCard:cardID}, () => {})
 
   setCurrentTopBid = (bid?:number):void => {
-    if(!bid) return
+    if(!bid){
+      this.setState({currentTopBid:undefined})
+      return
+    }
     this.setState({currentTopBid: bid})
   }
   componentDidMount():void{
