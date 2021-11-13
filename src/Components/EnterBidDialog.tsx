@@ -50,6 +50,7 @@ const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
     const handlePhoneNumberChange = (e:ChangeEvent<HTMLInputElement>):void => setPhoneNumberText(e.currentTarget.value)
     const handleNameChange = (e:ChangeEvent<HTMLInputElement>):void => setName(e.currentTarget.value)
     const handleBidAmountChange = (e:ChangeEvent<HTMLInputElement>):void => setBidAmount(e.currentTarget.value)
+    
 
 
     //Error handling for email, phone, bid, and name
@@ -181,7 +182,7 @@ const EnterBidDialog = (props:EnterBidDialogProps):JSX.Element => {
         <Dialog open={props.isOpen}>
             <DialogContent>
                 <DialogTitle>
-                    <Typography variant={"h5"} align="left">Top Bid - {props.currentTopBid ? props.currentTopBid:"N/A"}</Typography>
+                    <Typography variant={"h5"} align="left">Top Bid - ${props.currentTopBid ? props.currentTopBid:"N/A"}</Typography>
                 </DialogTitle>
                 <DialogContentText align="left"> {/*give margin bottom*/}
                     Enter Contact Info

@@ -57,7 +57,7 @@ const InstructionCard = (props:InstructionCardProps):JSX.Element => { //maybe re
                 return "If you enter the wrong amount, you can retract your bid and enter a new one by clicking on retract bid and entering your name and the amount you bid by accident."
             }
             case 3: {
-                return "All bids must be entered by November 13 at 2:00PM, or XXh XXmin XXs from now. After the picnic, you will be contacted to receive and pay for your item."
+                return "All bids must be entered by the end of the auction on November 13 at 2:00PM. After the picnic, you will be contacted to receive and pay for your item."
             }
             default: {
                 return "Info on how to submit bids and how much time is left+2 dollar rule+retract bid. Stop cringing, I can see you"
