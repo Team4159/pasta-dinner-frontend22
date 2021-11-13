@@ -73,11 +73,11 @@ class ItemCard extends Component< Readonly<ItemCardProps>, Readonly<ItemCardStat
                         <Box component={"div"} sx={styles.expandMore}><ExpandMore onClick={this.handleIsExpanded}/></Box> {/* add rotate transition*/}
                         <Collapse in={this.props.isExpanded/* this.state.isExpanded */} timeout="auto" unmountOnExit>
                             <CardContent>
-                                <Typography>{description}</Typography>
-                                <Typography paragraph fontSize={".9em"}>
+                                <Typography paragraph fontSize={".9em"}>{description}</Typography>
+                                {/* <Typography paragraph fontSize={".9em"}>
                                     Lorem ipsum dolor sit, amet consectetur adipisicing elit. Incidunt modi optio 
                                     unde architecto nihil adipisci magnam 
-                                </Typography>
+                                </Typography> */}
                             </CardContent>
                         </Collapse>         
                     </CardContent>
