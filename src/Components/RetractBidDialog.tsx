@@ -83,7 +83,7 @@ const RetractBid = (props:RetractBidProps):JSX.Element => {
         try {
             const body:RetractBidInfo = {
                 "id": props.currentCard,
-                "name": email,
+                "email": email,
                 "price": bidAmount
             }
             const res = await fetch(

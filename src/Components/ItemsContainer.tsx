@@ -103,7 +103,7 @@ const ItemsContainer = (props: ItemsContainerProps):JSX.Element => {
                 props.setCurrentTopBid((await currentTopbid.json()).price)
                 setItems(data) 
             } catch(err) {
-                console.log("Could not get items " + err)
+                console.log("Could not get items" + err)
             } 
         }
         getItems()
@@ -127,6 +127,7 @@ const ItemsContainer = (props: ItemsContainerProps):JSX.Element => {
                     description={item.description}
                     imageName={item.image}
                     name={item.name}
+                    highestBidder={item.highestBidder}
                 />
             
             )}

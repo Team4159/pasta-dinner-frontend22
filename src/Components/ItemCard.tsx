@@ -20,6 +20,8 @@ type ItemCardProps = {
     name:string;
     imageName?:string
 
+    highestBidder?:string
+
     isExpanded:boolean
     setIsExpanded: (b:boolean) => void
 }
@@ -51,7 +53,7 @@ class ItemCard extends Component< Readonly<ItemCardProps>, Readonly<ItemCardStat
     getFormattedPrice = (price:number):string => `${price}`.includes(".") ? `${price}`:`${price}.00` //Sam said get rid of cents?
     
     render():JSX.Element {
-        const {description, handleDialogOpen, handleRetractDialogOpen, topBid, itemName, startingPrice, id, name, imageName} = this.props
+        const {description, handleDialogOpen, handleRetractDialogOpen, topBid, itemName, startingPrice, id, name, imageName, highestBidder} = this.props
         return(
             <Fade in appear mountOnEnter timeout={{enter:1500}}>
                 <Card ref={this.heightRef} sx={styles.card}>
@@ -63,7 +65,7 @@ class ItemCard extends Component< Readonly<ItemCardProps>, Readonly<ItemCardStat
                             <Box component={"span"} sx={styles.name}>{itemName ? `#${id} ${itemName}`:"Item Title"}</Box>
                         </Typography>
                         <Typography align={"center"}>{startingPrice ? `Starting Price - $${this.getFormattedPrice(startingPrice)}`:"Starting Price - N/A"}</Typography>
-                        <Typography align="center">{topBid ? `Top Bid - ${name}: $${this.getFormattedPrice(topBid)}`:"Top Bid - N/A"}</Typography>
+                        <Typography align="center">{topBid ? `Top Bid - ${highestBidder}: $${this.getFormattedPrice(topBid)}`:"Top Bid - N/A"}</Typography>
                         <CardActions>
                             <Button sx={styles.button}onClick={() => handleDialogOpen(id)}>Enter Bid</Button>
                             <Button sx={styles.button} onClick={() => handleRetractDialogOpen(id)}>Retract Bid</Button>
