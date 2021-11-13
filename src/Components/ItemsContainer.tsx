@@ -111,7 +111,13 @@ const ItemsContainer = (props: ItemsContainerProps):JSX.Element => {
         try {
             const getTopBid = async ():Promise<void> => {
                 const currentTopbid:Response = await fetch(`https://${process.env.REACT_APP_API_URL}/users/gethighestbid?id=${props.currentCard ? props.currentCard:2}`, {method:'GET',mode:'cors'})
-                props.setCurrentTopBid((await currentTopbid.json()).price)
+                try {
+                    const price:any = (await currentTopbid.json()).price
+                    props.setCurrentTopBid(price)
+                } catch {
+                    props.setCurrentTopBid(undefined)
+                }
+    
             }
             getTopBid()
         } catch(err) {
