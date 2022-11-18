@@ -40,7 +40,7 @@ const Header = ():JSX.Element => {
                 <Slide in direction={'down'} mountOnEnter timeout={{enter:1500}}>
                     <Box>
                         <img alt="Team logo" src={teamlogo} style={styles.img}/>
-                        <Typography sx={styles.title}>Cardinalbotics 2021 Pasta Picnic</Typography>
+                        <Typography sx={styles.title}>Cardinalbotics 2022 Pasta Dinner</Typography>
                     </Box>
                 </Slide>
             </Box> 
