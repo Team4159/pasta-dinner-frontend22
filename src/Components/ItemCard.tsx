@@ -58,7 +58,7 @@ class ItemCard extends Component< Readonly<ItemCardProps>, Readonly<ItemCardStat
             <Fade in appear mountOnEnter timeout={{enter:1500}}>
                 <Card ref={this.heightRef} sx={styles.card}>
                     <Grid>
-                        <CardMedia style={styles.media} component={"img"} image={imageName? `https://pastadinner.lren.cf/src/images/${imageName}`:placeholder} alt={"Image placeholder"}/>
+                        <CardMedia style={styles.media} component={"img"} image={imageName? imageName:placeholder} alt={"Image placeholder"}/>
                     </Grid>
                     <CardContent>
                         <Typography variant={"h5"} align={"center"}>
